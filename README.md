@@ -66,9 +66,9 @@ Back Up Original gamelist.xml
 Promote Verified TEST XML
 ```
 
-The important part is that RCCU works against the TEST XML during processing.
+Importantly, RCCU uses and modifies a copy of your current `gamelist.xml` during processing.
 
-The live `gamelist.xml` is not used as the working XML. It is only backed up and replaced after the repaired TEST XML passes the final verification process and promotion is approved, unless automatic mode is enabled.
+The current `gamelist.xml` is never used as the working XML. RCCU creates `gamelist_TEST.xml` from it and performs its repairs and verification against the TEST XML. The original `gamelist.xml` is only backed up and replaced after the repaired TEST XML passes the final verification process and promotion is approved, unless automatic mode is enabled.
 
 ## Download
 
