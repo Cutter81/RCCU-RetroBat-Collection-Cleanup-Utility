@@ -76,16 +76,6 @@ Running RCCU
 
 For complete information about the processing stages, matching system, XML repair, recovery system, and verification process, see "RCCU_v4.29_Documentation.txt".
 
-Running RCCU
-
-1. Download "RCCU_v4.29.ps1".
-2. Place it in the appropriate RetroBat game directory.
-3. Open PowerShell in that directory.
-4. Run the script.
-5. Follow the instructions displayed by RCCU.
-
-For detailed information about the utility and its functions, see "RCCU_v4.29_Documentation.txt".
-
 PowerShell execution policies may prevent scripts from running on some Windows installations. If Windows blocks the script, check your PowerShell execution-policy settings before proceeding.
 
 Project Status
