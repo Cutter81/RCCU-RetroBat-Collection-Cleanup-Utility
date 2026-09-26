@@ -64,6 +64,8 @@ Final Verification
 Back Up Original gamelist.xml
         ↓
 Promote Verified TEST XML
+```text
+
 
 ## Download
 
