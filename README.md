@@ -30,18 +30,35 @@ RCCU is intended to help maintain large collections, but you should always have 
 
 Your original "gamelist.xml" should be preserved while RCCU creates the updated copy.
 
+Note: Files selected for deletion are sent to the Recycle Bin rather than being immediately and permanently deleted. Final deletion from the Recycle Bin is up to you.
+
 Requirements
 
 - Windows
 - PowerShell
 - A RetroBat game collection
 
-Usage
+Download
 
-1. Download the ".ps1" file from this repository.
-2. Place it where you want to run it, or in the appropriate RetroBat game directory.
-3. Run the PowerShell script.
-4. Follow the prompts displayed by RCCU.
+The latest version of RCCU is available in this repository.
+
+Main Program
+
+"RCCU_v4.29.ps1"
+
+Documentation
+
+"RCCU_v4.29_Documentation.txt"
+
+Running RCCU
+
+1. Download "RCCU_v4.29.ps1".
+2. Place it in the appropriate RetroBat game directory.
+3. Open PowerShell in that directory.
+4. Run the script.
+5. Follow the instructions displayed by RCCU.
+
+For detailed information about the utility and its functions, see "RCCU_v4.29_Documentation.txt".
 
 PowerShell execution policies may prevent scripts from running on some Windows installations. If Windows blocks the script, check your PowerShell execution-policy settings before proceeding.
 
