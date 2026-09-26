@@ -22,6 +22,48 @@ The basic idea is:
 
 RCCU was built for large collections where doing all of this manually becomes impractical. It is a maintenance utility you can run when you need to clean up, reconcile, repair, or verify a RetroBat collection.
 
+## When Would I Use RCCU?
+
+RCCU is intended for situations where a RetroBat collection has grown large enough that manually maintaining the games, media, and XML becomes difficult.
+
+Typical examples include:
+
+- You deleted ROMs and want to remove their leftover media and XML entries.
+- You added a large media pack and want to associate the files with the correct games.
+- You have manuals, PDFs, screenshots, videos, or other media that exist physically but are not referenced by `gamelist.xml`.
+- Your XML contains games that no longer exist on disk.
+- Games exist on disk but are missing from the XML.
+- You have broken or outdated media references in the XML.
+- You want to normalize videos to avoid EmulationStation preview playback artifacting.
+- You want to verify the collection and XML before replacing the live `gamelist.xml`.
+- You have a very large collection where checking everything manually would be impractical.
+
+RCCU is designed to be a maintenance utility that you can run when you need it rather than something that has to remain permanently installed.
+
+## How RCCU Works
+
+RCCU follows a staged process designed to protect the existing collection:
+
+RetroBat Collection
+        ↓
+Permission & Access Check
+        ↓
+Duplicate / Image / Video Analysis
+        ↓
+Copy gamelist.xml → gamelist_TEST.xml
+        ↓
+Media & Game Matching
+        ↓
+XML Repair
+        ↓
+Human Review / Cleanup
+        ↓
+Final Verification
+        ↓
+Back Up Original gamelist.xml
+        ↓
+Promote Verified TEST XML
+
 ## Download
 
 **RCCU v4.29**
