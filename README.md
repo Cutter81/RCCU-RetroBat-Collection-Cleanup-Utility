@@ -10,7 +10,7 @@ Features
 - Compares game files against available media
 - Finds unused or abandoned media
 - Finds media that exists but is not referenced by "gamelist.xml"
-- Adds valid unreferenced media to a new XML
+- Adds valid unreferenced media to "gamelist_TEST.xml"
 - Supports common RetroBat media types such as:
   - Images
   - Videos
@@ -19,7 +19,7 @@ Features
   - Box art
   - Other supported media
 - Helps identify and remove unwanted media interactively
-- Creates a new/modified "gamelist.xml" rather than overwriting the original
+- Creates and verifies a working "gamelist_TEST.xml" before promoting it to the live "gamelist.xml", while keeping a backup of the original
 - Designed for large collections
 
 Important
