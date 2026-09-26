@@ -54,20 +54,6 @@ RCCU also maintains a recovery log containing the original and recovered file pa
 
 Even with these safeguards, always maintain your own backup of important data before performing collection maintenance.
 
-Download
-
-## Download
-
-[Download RCCU v4.29](./RCCU_v4.29.ps1)
-
-[Download Documentation](./RCCU_v4.29_Documentation.txt)
-
-Documentation
-
-"RCCU_v4.29_Documentation.txt"
-
-The documentation contains the complete Stage 1–9 function and safety details for RCCU v4.29.
-
 Running RCCU
 
 1. Download "RCCU_v4.29.ps1".
@@ -91,3 +77,15 @@ License
 RCCU is open source and released under the MIT License.
 
 See the "LICENSE" file for the full license text.
+
+## Download
+
+[Download RCCU v4.29](./RCCU_v4.29.ps1)
+
+[Download Documentation](./RCCU_v4.29_Documentation.txt)
+
+Documentation
+
+"RCCU_v4.29_Documentation.txt"
+
+The documentation contains the complete Stage 1–9 function and safety details for RCCU v4.29.
