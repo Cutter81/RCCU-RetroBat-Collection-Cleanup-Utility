@@ -137,9 +137,9 @@ Even with these safeguards, always maintain your own backup of important data be
 ## Running RCCU
 
 1. Download `RCCU_v4.29.ps1`.
-2. Place it in the appropriate RetroBat game directory for easy directory discovery or simply run from anywhere.
-3. Open PowerShell in that directory and run the script, run through Poweshell ISE, or simply double click the script.
-5. Follow the instructions displayed by RCCU.
+2. Place it in the appropriate RetroBat game directory for easy directory discovery, or simply run it from anywhere.
+3. Open PowerShell in that directory and run the script, run it through PowerShell ISE, or simply double-click the script.
+4. Follow the instructions displayed by RCCU.
 
 For complete information about the processing stages, matching system, XML repair, recovery system, and verification process, see `RCCU_v4.29_Documentation.txt`.
 
