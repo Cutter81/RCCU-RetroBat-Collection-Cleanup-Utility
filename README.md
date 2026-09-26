@@ -2,7 +2,25 @@
 
 A PowerShell utility for maintaining RetroBat game collections, media files, and `gamelist.xml`.
 
-RCCU is designed to help find missing, unused, and unreferenced media in large RetroBat collections while keeping the original `gamelist.xml` safe.
+RCCU is designed to help identify missing files, stale references, unused or unreferenced media, and XML inconsistencies in large RetroBat collections while keeping the original `gamelist.xml` safe.
+
+## Why RCCU?
+
+RCCU was created because maintaining a large RetroBat collection can leave behind a lot of things that normal cleanup tools don't necessarily understand.
+
+Removing a game doesn't necessarily remove its media or XML entry. Adding a large media pack doesn't necessarily mean the files will be correctly associated with the games. A manual or PDF can be perfectly useful while still being completely unreferenced by `gamelist.xml`.
+
+RCCU is designed to reconcile all of this.
+
+It compares the files that actually exist with the working RetroBat XML, identifies what belongs together, repairs missing or broken references, and only considers media for removal after those checks have been completed.
+
+RCCU also deliberately avoids guessing when a filename could match multiple games. Ambiguous files are reported for human review instead.
+
+The basic idea is:
+
+**Detect first. Protect known-good data. Repair the working XML. Verify everything. Only then touch the live XML.**
+
+RCCU was built for large collections where doing all of this manually becomes impractical. It is a maintenance utility you can run when you need to clean up, reconcile, repair, or verify a RetroBat collection.
 
 ## Download
 
@@ -92,175 +110,173 @@ RCCU is open source and released under the MIT License.
 
 See the `LICENSE` file for the full license text.
 
+## Extended Feature List
 
+### 🧹 Collection Cleanup
 
-##Extended Feature List
+- Scan an entire RetroBat collection recursively
+- Process individual RetroBat systems/directories
+- Process every `gamelist.xml` underneath a root automatically
+- Find duplicate ROM/source files
+- Protect the newest duplicate from deletion
+- Handle `.m3u` playlists intelligently
+- Handle BIN/CUE disc-image relationships
+- Avoid treating disc payloads as separate games
+- Identify stale XML game entries
+- Identify games that exist physically but are missing from XML
+- Identify duplicate XML paths
+- Identify broken media references
 
-🧹 Collection cleanup
+### 🖼️ Image Cleanup
 
-Scan an entire RetroBat collection recursively
-Process individual RetroBat systems/directories
-Process every gamelist.xml underneath a root automatically
-Find duplicate ROM/source files
-Protect the newest duplicate from deletion
-Handle .m3u playlists intelligently
-Handle BIN/CUE disc-image relationships
-Avoid treating disc payloads as separate games
-Identify stale XML game entries
-Identify games that exist physically but are missing from XML
-Identify duplicate XML paths
-Identify broken media references
+- Detect completely black images
+- Detect completely white images
+- Detect transparent/uniform images
+- Detect solid-green images
+- Analyze large images at reduced resolution for speed
+- Process image analysis using multiple workers
+- Detect large black borders/letterboxing
+- Calculate potential crop regions
+- Review detected black-bar images before changing them
+- Crop selected images
+- Recycle unwanted images instead of permanently deleting them, preserving directory structure
 
-🖼️ Image cleanup
+### 🎬 Video Processing
 
-Detect completely black images
-Detect completely white images
-Detect transparent/uniform images
-Detect solid-green images
-Analyze large images at reduced resolution for speed
-Process image analysis using multiple workers
-Detect large black borders/letterboxing
-Calculate potential crop regions
-Review detected black-bar images before changing them
-Crop selected images
-Recycle unwanted images instead of permanently deleting them, preserving directory structure.
+- Find videos throughout the collection
+- Bulk-normalize videos with FFmpeg to avoid ES preview playback artifacting
+- H.264/libx264 encoding
+- AAC audio
+- yuv420p
+- Constant 30 FPS
+- Preserve original resolution
+- 160-kbps audio
+- 48-kHz audio
+- Preserve filenames/extensions
+- Run multiple FFmpeg jobs in parallel
+- Automatically calculate processing concurrency from CPU resources
+- Log queued/completed/successful/failed conversions
+- Reconcile normalized videos with the games and XML
 
-🎬 Video processing
+### 🔗 Media to ROM Matching
 
-Find videos throughout the collection
-Bulk-normalize videos with FFmpeg (to avoid ES preview platback artifacting)
-H.264/libx264 encoding
-AAC audio
-yuv420p
-Constant 30 FPS
-Preserve original resolution
-160-kbps audio
-48-kHz audio
-Preserve filenames/extensions
-Run multiple FFmpeg jobs in parallel
-Automatically calculate processing concurrency from CPU resources
-Log queued/completed/successful/failed conversions
-Then reconcile those videos with the games/XML
+- Discover physical RetroBat media
+- Recognize different media categories
+- Match media against actual game/source files
+- Match media against XML titles
+- Handle release-heavy filenames
+- Handle TOSEC-style naming
+- Strip known media suffixes
+- Handle numbered media
+- Normalize common naming differences
+- Ignore punctuation differences
+- Retain numbers during normalization
+- Distinguish `Game 3` from `Game`
+- Distinguish `Version 2.1` from `Version 21`
+- Use the clean XML title as an additional matching alias
+- Detect ambiguous matches
+- Refuse to guess when multiple games could match
+- Produce unmatched-media lists for human review
+- Does not equate “unreferenced” with “useless”
 
-🔗 Media to ROM matching
+### 📝 XML Repair
 
-Discover physical RetroBat media
-Recognize different media categories
-Match media against actual game/source files
-Match media against XML titles
-Handle release-heavy filenames
-Handle TOSEC-style naming
-Strip known media suffixes
-Handle numbered media
-Normalize common naming differences
-Ignore punctuation differences
-Retain numbers during normalization
-Distinguish Game 3 from Game
-Distinguish Version 2.1 from Version 21
-Use the clean XML  as an additional matching alias
-Detect ambiguous matches
-Refuse to guess when multiple games could match
-Produce unmatched-media lists for human review
-It doesn't equate “unreferenced” with “useless”
+- Create `gamelist_TEST.xml`
+- Work against the TEST XML rather than the live XML
+- Remove stale game entries
+- Remove broken media references
+- Add missing game entries
+- Add missing media references
+- Resolve relative RetroBat paths correctly
+- Validate XML after saving
+- Use temporary XML files during writes
+- Verify game-entry counts
+- Reject zero-game XML
+- Keep ordinary metadata from being mistaken for media paths
+- Record XML changes
 
-📝 XML repair
+### ♻️ Recovery Instead of Deletion
 
-Create gamelist_TEST.xml
-Work against the TEST XML rather than the live XML
-Remove stale game entries
-Remove broken media references
-Add missing game entries
-Add missing media references
-Resolve relative RetroBat paths correctly
-Validate XML after saving
-Use temporary XML files during writes
-Verify game-entry counts
-Reject zero-game XML
-Keep ordinary metadata from being mistaken for media paths
-Record XML changes
+- Windows Recycle Bin support for fixed drives
+- Dedicated `RCCU_RecycleBin` for removable/SD media
+- Preserve the complete original relative path
+- Recovery manifest/log
+- Handle duplicate recovery filenames
+- Automatically fall back to RCCU recovery if Windows recycling fails
+- Cache the failed recycle strategy
+- Exclude the RCCU recovery folder from future scans
 
-♻ Recovery instead of deletion
+### 🔐 Permission Handling
 
-Windows Recycle Bin support for fixed drives
-Dedicated RCCU_RecycleBin for removable/SD media
-Preserve the complete original relative path
-Recovery manifest/log
-Handle duplicate recovery filenames
-Automatically fall back to RCCU recovery if Windows recycling fails
-Cache the failed recycle strategy
-Exclude the RCCU recovery folder from future scans
+- Detect current Windows user dynamically
+- Check ownership/access recursively
+- Repair ownership when necessary
+- Grant Modify permissions
+- Apply inheritance
+- Recheck permissions afterward
+- Refuse to proceed when required access isn't available
 
-🔐 Permission handling
-
-Detect current Windows user dynamically
-Check ownership/access recursively
-Repair ownership when necessary
-Grant Modify permissions
-Apply inheritance
-Recheck permissions afterward
-
-Refuse to proceed when required access isn't available
-
-🔎 Final verification
+### 🔎 Final Verification
 
 Before touching the real XML, RCCU checks:
 
-Missing game/source files
-Missing XML game entries
-Duplicate XML paths
-Broken media references
-XML integrity
-TEST XML validity
-Verification
-Backup original
-Promotion
+- Missing game/source files
+- Missing XML game entries
+- Duplicate XML paths
+- Broken media references
+- XML integrity
+- TEST XML validity
 
-If promotion fails attempt automatic restoration of the original.
+After successful verification, RCCU can:
 
-📊 Logging/reporting
+- Back up the original XML
+- Promote the verified TEST XML
+- Attempt automatic restoration of the original if promotion fails
 
-It can generate:
+### 📊 Logging and Reporting
 
-000-Output.txt
-000-VerificationAudit.txt
-000-MediaAudit.txt
-000-XMLChanges.txt
-000-GameList.txt
-000-VideoNormalization.txt
+RCCU can generate:
 
-And the output window has:
+- `000-Output.txt`
+- `000-VerificationAudit.txt`
+- `000-MediaAudit.txt`
+- `000-XMLChanges.txt`
+- `000-GameList.txt`
+- `000-VideoNormalization.txt`
 
-Clickable file paths
-Open file
-Open containing folder
-Highlight file
-Copy path/name
-Copy selected output text
+The output window provides:
 
-🎛️ Runtime controls
+- Clickable file paths
+- Open file
+- Open containing folder
+- Highlight file
+- Copy path/name
+- Copy selected output text
 
-PAUSE
-START/resume
-STOP
-START OVER
-Individual stage enable/disable
+### 🎛️ Runtime Controls
 
-🤖 Automation
+- PAUSE
+- START/resume
+- STOP
+- START OVER
+- Individual stage enable/disable
 
-Automatic “YES TO EVERYTHING”
-Automatic recursive-root processing
-Sequential processing of multiple RetroBat gamelist.xml directories
-Automatic cleanup decisions
-Automatic XML repair
-Automatic promotion after verification
+### 🤖 Automation
 
-⚙ Performance
+- Automatic “YES TO EVERYTHING”
+- Automatic recursive-root processing
+- Sequential processing of multiple RetroBat `gamelist.xml` directories
+- Automatic cleanup decisions
+- Automatic XML repair
+- Automatic promotion after verification
 
-Multi-worker image analysis
-Parallel FFmpeg processing
-Cached recovery directories
-Cached recycle strategy
-Direct .NET File.Move() for RCCU recovery
-De-duplicated media discovery
-Controlled XML loading/saving
-Designed for very large collections
+### ⚙️ Performance
+
+- Multi-worker image analysis
+- Parallel FFmpeg processing
+- Cached recovery directories
+- Cached recycle strategy
+- Direct .NET `File.Move()` for RCCU recovery
+- De-duplicated media discovery
+- Controlled XML loading/saving
+- Designed for very large collections
