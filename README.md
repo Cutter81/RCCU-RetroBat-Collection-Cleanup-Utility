@@ -44,24 +44,14 @@ RCCU is designed to be a maintenance utility that you can run when you need it r
 
 RCCU follows a staged process designed to protect the existing collection:
 
-RetroBat Collection
-        ↓
 Permission & Access Check
-        ↓
 Duplicate / Image / Video Analysis
-        ↓
-Copy gamelist.xml → gamelist_TEST.xml
-        ↓
+Copy gamelist.xml to gamelist_TEST.xml
 Media & Game Matching
-        ↓
 XML Repair
-        ↓
 Human Review / Cleanup
-        ↓
 Final Verification
-        ↓
 Back Up Original gamelist.xml
-        ↓
 Promote Verified TEST XML
 
 ## Download
