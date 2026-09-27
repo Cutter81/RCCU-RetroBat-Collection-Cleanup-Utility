@@ -478,7 +478,7 @@ $IgnoredSuffixes = @(
 # ============================================================
 
 $Form = New-Object System.Windows.Forms.Form
-$Form.Text = "RCCU - RetroBat Collection Cleanup Utility   |   v4.29"
+$Form.Text = "RCCU - RetroBat Collection Cleanup Utility   |   v4.30"
 $Form.AutoScaleMode = [System.Windows.Forms.AutoScaleMode]::None
 $Form.Size = [System.Drawing.Size]::new(1200,900)
 $Form.StartPosition = "CenterScreen"
@@ -489,7 +489,7 @@ $Form.MaximumSize = [System.Drawing.Size]::new(0,0)
 $Form.MaximizeBox = $true
 
 $Title = New-Object System.Windows.Forms.Label
-$Title.Text = "RetroBat Collection Cleanup Utility   —   v4.29"
+$Title.Text = "RetroBat Collection Cleanup Utility   —   v4.30"
 $Title.Font = [System.Drawing.Font]::new("Segoe UI",16,[System.Drawing.FontStyle]::Bold)
 $Title.Location = [System.Drawing.Point]::new(20,10)
 $Title.Size = [System.Drawing.Size]::new(720,38)
@@ -3930,7 +3930,7 @@ function Get-MediaBaseName {
         [System.IO.FileInfo]$File
     )
 
-    $name = [System.IO.Path]::GetFileNameWithoutExtension($File.Name)
+    $name = $File.BaseName
 
     foreach ($suffix in $IgnoredSuffixes) {
         if ($name.ToLowerInvariant().EndsWith($suffix)) {
@@ -4080,7 +4080,21 @@ function Get-RccuMediaTitleKey {
     param([string]$Name)
 
     if ([string]::IsNullOrWhiteSpace($Name)) { return "" }
-    $n = [System.IO.Path]::GetFileNameWithoutExtension($Name)
+
+    # Some collection filenames can contain characters that .NET interprets
+    # as invalid path syntax when a bare name is passed to Path helpers.
+    # This is a NAME, not a path: use the normal Path helper when safe, then
+    # fall back to simple extension stripping without validating path syntax.
+    try {
+        $n = [System.IO.Path]::GetFileNameWithoutExtension([string]$Name)
+    }
+    catch {
+        $n = [string]$Name
+        $lastDot = $n.LastIndexOf('.')
+        if ($lastDot -gt 0) {
+            $n = $n.Substring(0,$lastDot)
+        }
+    }
 
     do {
         $old = $n
@@ -4168,7 +4182,7 @@ function Invoke-MediaAudit {
     $punctuationInsensitiveGameMap = @{}
 
     foreach ($game in $gameFiles) {
-        $strictKey = ([System.IO.Path]::GetFileNameWithoutExtension($game.Name) -replace '\s{2,}',' ').Trim().ToLowerInvariant()
+        $strictKey = ($game.BaseName -replace '\s{2,}',' ').Trim().ToLowerInvariant()
         $normalizedKey = Get-NormalName $game.Name
         $titleKey = Get-RccuMediaTitleKey $game.Name
 
@@ -5698,7 +5712,7 @@ function Invoke-FinalVerification {
         if (-not $seenPaths.ContainsKey($actualKey)) {
             [void]$missingXmlEntries.Add(
                 [PSCustomObject]@{
-                    Game = [System.IO.Path]::GetFileNameWithoutExtension($actualGame.Name)
+                    Game = $actualGame.BaseName
                     XmlPath = "./$actualRelative"
                     FullPath = $actualGame.FullName
                     How = "A real game/source file exists on disk, but the TEST XML contains no <game> entry for it."
