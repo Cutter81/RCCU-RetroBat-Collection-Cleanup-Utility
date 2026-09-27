@@ -478,7 +478,7 @@ $IgnoredSuffixes = @(
 # ============================================================
 
 $Form = New-Object System.Windows.Forms.Form
-$Form.Text = "RCCU - RetroBat Collection Cleanup Utility   |   v4.28"
+$Form.Text = "RCCU - RetroBat Collection Cleanup Utility   |   v4.29"
 $Form.AutoScaleMode = [System.Windows.Forms.AutoScaleMode]::None
 $Form.Size = [System.Drawing.Size]::new(1200,900)
 $Form.StartPosition = "CenterScreen"
@@ -489,7 +489,7 @@ $Form.MaximumSize = [System.Drawing.Size]::new(0,0)
 $Form.MaximizeBox = $true
 
 $Title = New-Object System.Windows.Forms.Label
-$Title.Text = "RetroBat Collection Cleanup Utility   —   v4.28"
+$Title.Text = "RetroBat Collection Cleanup Utility   —   v4.29"
 $Title.Font = [System.Drawing.Font]::new("Segoe UI",16,[System.Drawing.FontStyle]::Bold)
 $Title.Location = [System.Drawing.Point]::new(20,10)
 $Title.Size = [System.Drawing.Size]::new(720,38)
