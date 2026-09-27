@@ -72,17 +72,17 @@ The current `gamelist.xml` is never used as the working XML. RCCU creates `gamel
 
 ## Download
 
-**RCCU v4.29**
+**RCCU v4.31**
 
-[Download RCCU v4.29](./RCCU_v4.29.ps1)
+[Download RCCU v4.31](./RCCU_v4.31.ps1)
 
 **Documentation**
 
-[Download Documentation](./RCCU_v4.29_Documentation.txt)
+[Download Documentation](./RCCU_v4.31_Documentation.txt)
 
-The documentation contains the complete Stage 1–9 function and safety details for RCCU v4.29.
+The documentation contains the complete Stage 1–9 function and safety details for RCCU v4.31.
 
-For the official v4.29 release, see the [RCCU v4.29 Release](https://github.com/Cutter81/RCCU-RetroBat-Collection-Cleanup-Utility/releases/tag/v4.29).
+For the official v4.31 release, see the [RCCU v4.31 Release](https://github.com/Cutter81/RCCU-RetroBat-Collection-Cleanup-Utility/releases/tag/v4.31).
 
 ## Features
 
@@ -136,12 +136,12 @@ Even with these safeguards, always maintain your own backup of important data be
 
 ## Running RCCU
 
-1. Download `RCCU_v4.29.ps1`.
+1. Download `RCCU_v4.31.ps1`.
 2. Place it in the appropriate RetroBat game directory for easy directory discovery, or simply run it from anywhere.
 3. Open PowerShell in that directory and run the script, run it through PowerShell ISE, or simply double-click the script.
 4. Follow the instructions displayed by RCCU.
 
-For complete information about the processing stages, matching system, XML repair, recovery system, and verification process, see `RCCU_v4.29_Documentation.txt`.
+For complete information about the processing stages, matching system, XML repair, recovery system, and verification process, see `RCCU_v4.31_Documentation.txt`.
 
 PowerShell execution policies may prevent scripts from running on some Windows installations. If Windows blocks the script, check your PowerShell execution-policy settings before proceeding.
 
