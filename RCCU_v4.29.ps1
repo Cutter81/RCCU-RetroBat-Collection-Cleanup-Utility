@@ -478,7 +478,7 @@ $IgnoredSuffixes = @(
 # ============================================================
 
 $Form = New-Object System.Windows.Forms.Form
-$Form.Text = "RCCU - RetroBat Collection Cleanup Utility   |   v4.30"
+$Form.Text = "RCCU - RetroBat Collection Cleanup Utility   |   v4.31"
 $Form.AutoScaleMode = [System.Windows.Forms.AutoScaleMode]::None
 $Form.Size = [System.Drawing.Size]::new(1200,900)
 $Form.StartPosition = "CenterScreen"
@@ -489,7 +489,7 @@ $Form.MaximumSize = [System.Drawing.Size]::new(0,0)
 $Form.MaximizeBox = $true
 
 $Title = New-Object System.Windows.Forms.Label
-$Title.Text = "RetroBat Collection Cleanup Utility   —   v4.30"
+$Title.Text = "RetroBat Collection Cleanup Utility   —   v4.31"
 $Title.Font = [System.Drawing.Font]::new("Segoe UI",16,[System.Drawing.FontStyle]::Bold)
 $Title.Location = [System.Drawing.Point]::new(20,10)
 $Title.Size = [System.Drawing.Size]::new(720,38)
@@ -6495,20 +6495,42 @@ try {
     })
 
     $StartOverButton.Add_Click({
+        # START OVER is deliberately unavailable while maintenance is running.
+        # It is only enabled after a normal finish or after STOP has completely
+        # unwound the maintenance loop.
         if ($script:MaintenanceRunning) { return }
 
         $script:StartOverRequested = $true
         $script:ForceClose = $true
         $script:MaintenanceFinished = $true
         $StartOverButton.Enabled = $false
-        $StatusLabel.Text = "Closing and restarting RCCU..."
+        $StatusLabel.Text = "Closing current run and reopening RCCU start window..."
         [System.Windows.Forms.Application]::DoEvents()
 
-        # Launch a fresh RCCU instance so the directory-selection dialog is
-        # shown again with a completely clean run state.
+        # Start a completely fresh RCCU process.  The new process begins at
+        # the root-selection dialog, while this finished/stopped instance is
+        # then closed.  Keep the child process independent of the current UI.
         if (-not [string]::IsNullOrWhiteSpace($PSCommandPath) -and (Test-Path -LiteralPath $PSCommandPath -PathType Leaf)) {
             $psExe = Join-Path $PSHOME "powershell.exe"
-            Start-Process -FilePath $psExe -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-File',$PSCommandPath) | Out-Null
+            $childArgs = @(
+                '-NoProfile'
+                '-ExecutionPolicy'
+                'Bypass'
+                '-File'
+                ('"' + $PSCommandPath + '"')
+            )
+            Start-Process -FilePath $psExe -ArgumentList $childArgs -WorkingDirectory (Split-Path -Parent $PSCommandPath) | Out-Null
+        }
+        else {
+            [System.Windows.Forms.MessageBox]::Show(
+                $Form,
+                "RCCU could not determine the current .ps1 file, so START OVER could not reopen the start window.",
+                "RCCU - START OVER",
+                [System.Windows.Forms.MessageBoxButtons]::OK,
+                [System.Windows.Forms.MessageBoxIcon]::Warning
+            ) | Out-Null
+            $StartOverButton.Enabled = $true
+            return
         }
 
         $Form.Close()
